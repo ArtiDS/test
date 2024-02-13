@@ -1,0 +1,25 @@
+restart.sh
+
+#!/bin/bash
+
+LOG_FILE=~/.roller/relayer/relayer.log
+
+while true
+do
+  # Get the last 3 lines of the log file
+  last_lines=$(tail -n 3 $LOG_FILE)
+
+  # Check if any line contains the desired pattern
+  if echo "$last_lines" | grep -q "(Status: 503 Service Unavailable, Protocol HTTP/1.1)"; then
+    # Restart the services if the pattern is found
+    echo "Error detected, restarting services..."
+    sudo systemctl restart relayer
+    sudo systemctl restart sequencer
+
+    # Wait for 60 seconds before checking again
+    sleep 60
+  else
+    echo "No error, checking again in 5 seconds..."
+    # Sleep for 5 seconds
+    sleep 5
+  fi
