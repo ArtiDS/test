@@ -1,0 +1,30 @@
+sudo systemctl stop sequencer
+sudo systemctl stop relayer
+
+# config 1
+nano $HOME/.roller/config.toml
+
+API_URL = "https://api-dymension-testnet.mzonder.com:443"
+RPC_URL = "https://rpc-dymension-testnet.mzonder.com:443"
+ARCHIVE_RPC_URL = "https://rpc-dymension-testnet.mzonder.com:443"
+
+# config 2
+nano $HOME/.roller/relayer/config/config.yaml
+
+# for froopyland side
+rpc-addr: https://rpc-dymension-testnet.mzonder.com:443
+
+# config 3
+nano $HOME/.roller/rollapp/config/dymint.toml
+
+node_address = "https://rpc-dymension-testnet.mzonder.com:443"
+
+roller services load
+
+
+sudo systemctl enable sequencer
+sudo systemctl enable relayer
+
+
+sudo systemctl start sequencer
+sudo systemctl start relayer
